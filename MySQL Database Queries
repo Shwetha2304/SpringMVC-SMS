@@ -1,0 +1,80 @@
+						******************************************
+										Database
+						******************************************
+create database SMS;
+use SMS;
+
+						******************************************
+								SubscriptionType  Table
+						******************************************
+
+CREATE TABLE SubscriptionType (
+  subTypeID INT NOT NULL PRIMARY KEY auto_increment,
+  subTypeName VARCHAR(100)NOT NULL
+);
+Select * From SubscriptionType
+
+						******************************************
+									Product Table
+						******************************************
+CREATE TABLE Products (
+  prodID INT NOT NULL PRIMARY KEY auto_increment,
+  prodName VARCHAR(50) NOT NULL,
+  prodMonthlyPrice int NOT NULL,
+  prodQuarterlyPrice int NOT NULL,
+  prodYearlyPrice int NOT NULL
+);
+
+INSERT INTO Products (prodName, prodMonthlyPrice, prodQuarterlyPrice, prodYearlyPrice)
+VALUES
+  ('Amazon', 179, 499, 1499),
+  ('Netflix', 149, 399, 1699),
+  ('Hotstar', 299, 849, 999);
+  
+Select * From Products
+ 
+ 
+						******************************************
+										User Table
+						****************************************** 
+ 
+CREATE TABLE User (
+    userID INT PRIMARY KEY AUTO_INCREMENT,
+    userName VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    confPass VARCHAR(255) NOT NULL,
+    userEmail VARCHAR(255) NOT NULL,
+    userPhno BIGINT(10) NOT NULL,
+    userRole VARCHAR(255) NOT NULL
+);
+Select * from User
+
+ 
+							******************************************
+ 										Subscription Table
+							******************************************
+CREATE TABLE Subscription (
+  subID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  userID INT NOT NULL,
+  prodID INT NOT NULL,
+  prodName VARCHAR(255) NOT NULL,
+  subTypeID INT NOT NULL,
+  subTypeName VARCHAR(255) NOT NULL,
+  price INT NOT NULL,
+  subDate DATE NOT NULL,
+  status VARCHAR(255) NOT NULL,
+  FOREIGN KEY (userID) REFERENCES User(userID),
+  FOREIGN KEY (prodID) REFERENCES Products(prodID),
+  FOREIGN KEY (subTypeID) REFERENCES SubscriptionType(subTypeID)
+);
+
+
+INSERT INTO Subscription (userID, prodID, prodName, subTypeID, subTypeName, price, subDate, status)
+VALUES
+(1, 1, 'Amazon', 1, 'Monthly', 179, '2023-01-16', 'true'),
+(2, 2, 'Netflix', 2, 'Quarterly', 399, '2022-05-17', 'true'),
+(3, 3, 'Hotstar', 2, 'Quarterly', 849, '2023-02-17', 'true'),
+(4, 3, 'Hotstar', 3, 'Yearly', 999, '2021-03-18', 'true'),
+(5, 2, 'Netflix', 3, 'Yearly', 1699, '2023-05-18', 'true');
+
+SELECT * FROM Subscription
